@@ -28,6 +28,12 @@ namespace Manajemen_Distribusi_Buah
             petani.ShowDialog();
         }
 
+        private void btnmitra_Click(object sender, EventArgs e)
+        {
+            FormMitra mitra = new FormMitra();
+            mitra.ShowDialog();
+        }
+
 
     }
 }
