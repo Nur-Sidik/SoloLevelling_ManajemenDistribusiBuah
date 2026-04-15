@@ -179,7 +179,30 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
-
+        private void btnCari_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT id_petani AS 'ID', nama_petani AS 'Nama Petani', alamat AS 'Alamat' FROM Petani WHERE nama_petani LIKE @cari";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@cari", "%" + txtcari.Text + "%");
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            DataTable dt = new DataTable();
+                            dt.Load(reader);
+                            dgvpetani.DataSource = dt;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
         }
     }
 
