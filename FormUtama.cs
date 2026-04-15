@@ -40,6 +40,12 @@ namespace Manajemen_Distribusi_Buah
             panen.ShowDialog();
         }
 
+        private void btndistribusi_Click(object sender, EventArgs e)
+        {
+            FormDistribusi distribusi = new FormDistribusi();
+            distribusi.ShowDialog();
+        }
+
 
     }
 }
