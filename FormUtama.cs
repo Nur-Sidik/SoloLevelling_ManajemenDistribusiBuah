@@ -46,6 +46,11 @@ namespace Manajemen_Distribusi_Buah
             distribusi.ShowDialog();
         }
 
+        private void btnlaporan_Click(object sender, EventArgs e)
+        {
+            FormLaporan laporan = new FormLaporan();
+            laporan.ShowDialog();
+        }
 
-    }
+ 
 }
