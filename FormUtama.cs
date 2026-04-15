@@ -63,6 +63,14 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
-  
+        private void FormUtama_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnpetani_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
