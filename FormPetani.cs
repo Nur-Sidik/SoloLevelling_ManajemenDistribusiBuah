@@ -93,7 +93,18 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
-      
+        private void dgvPetani_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvpetani.Rows[e.RowIndex];
+                txtid.Text = row.Cells["ID"].Value.ToString();
+                txtnama.Text = row.Cells["Nama Petani"].Value.ToString();
+                txtalamat.Text = row.Cells["Alamat"].Value.ToString();
+            }
+        }
+
+
         }
     }
 
