@@ -104,7 +104,48 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        private void btnUbah_Click(object sender, EventArgs e)
+        {
+            if (txtid.Text == "")
+            {
+                MessageBox.Show("Pilih data yang akan diubah dari tabel terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (txtnama.Text == "" || txtalamat.Text == "")
+            {
+                MessageBox.Show("Nama dan Alamat tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            DialogResult dialog = MessageBox.Show("Apakah Anda yakin ingin mengubah data ini?", "Konfirmasi Ubah", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialog == DialogResult.Yes)
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    try
+                    {
+                        conn.Open();
+                        string query = "UPDATE Petani SET nama_petani = @nama, alamat = @alamat WHERE id_petani = @id";
+                        using (SqlCommand cmd = new SqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@nama", txtnama.Text);
+                            cmd.Parameters.AddWithValue("@alamat", txtalamat.Text);
+                            cmd.Parameters.AddWithValue("@id", txtid.Text);
+                            cmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Data berhasil diubah!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadData();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        
         }
     }
 
