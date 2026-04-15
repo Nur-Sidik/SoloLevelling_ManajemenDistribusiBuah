@@ -67,10 +67,5 @@ namespace Manajemen_Distribusi_Buah
         {
             Application.Exit();
         }
-
-        private void btnpetani_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }

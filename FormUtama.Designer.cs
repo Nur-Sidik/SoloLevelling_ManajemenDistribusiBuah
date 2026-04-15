@@ -57,7 +57,7 @@
             this.btnpetani.TabIndex = 1;
             this.btnpetani.Text = "Kelola Data Petani";
             this.btnpetani.UseVisualStyleBackColor = true;
-            this.btnpetani.Click += new System.EventHandler(this.btnpetani_Click_1);
+            this.btnpetani.Click += new System.EventHandler(this.btnpetani_Click);
             // 
             // btnlaporan
             // 
@@ -67,6 +67,7 @@
             this.btnlaporan.TabIndex = 2;
             this.btnlaporan.Text = "Laporan dan Rekap Besar";
             this.btnlaporan.UseVisualStyleBackColor = true;
+            this.btnlaporan.Click += new System.EventHandler(this.btnlaporan_Click);
             // 
             // btnpanen
             // 
@@ -76,6 +77,7 @@
             this.btnpanen.TabIndex = 3;
             this.btnpanen.Text = "Input Hasil Panen";
             this.btnpanen.UseVisualStyleBackColor = true;
+            this.btnpanen.Click += new System.EventHandler(this.btnpanen_Click);
             // 
             // btnmitra
             // 
@@ -85,6 +87,7 @@
             this.btnmitra.TabIndex = 4;
             this.btnmitra.Text = "Kelola Data Mitra";
             this.btnmitra.UseVisualStyleBackColor = true;
+            this.btnmitra.Click += new System.EventHandler(this.btnmitra_Click);
             // 
             // btndistribusi
             // 
@@ -94,6 +97,7 @@
             this.btndistribusi.TabIndex = 5;
             this.btndistribusi.Text = "Catat Transaksi Distribusi";
             this.btndistribusi.UseVisualStyleBackColor = true;
+            this.btndistribusi.Click += new System.EventHandler(this.btndistribusi_Click);
             // 
             // btnlogout
             // 
@@ -105,6 +109,7 @@
             this.btnlogout.TabIndex = 6;
             this.btnlogout.Text = "Logout";
             this.btnlogout.UseVisualStyleBackColor = false;
+            this.btnlogout.Click += new System.EventHandler(this.btnlogout_Click);
             // 
             // label2
             // 
@@ -143,6 +148,7 @@
             this.Name = "FormUtama";
             this.Text = "FormUtama";
             this.Load += new System.EventHandler(this.FormUtama_Load);
+            this.Click += new System.EventHandler(this.FormUtama_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
