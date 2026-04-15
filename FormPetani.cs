@@ -62,7 +62,39 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
-       
+        private void btnSimpan_Click(object sender, EventArgs e)
+        {
+            if (txtnama.Text == "" || txtalamat.Text == "")
+            {
+                MessageBox.Show("Nama dan Alamat tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "INSERT INTO Petani (nama_petani, alamat) VALUES (@nama, @alamat)";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@nama", txtnama.Text);
+                        cmd.Parameters.AddWithValue("@alamat", txtalamat.Text);
+                        cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Data berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadData();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+        }
+
+      
+        }
     }
 
 }
