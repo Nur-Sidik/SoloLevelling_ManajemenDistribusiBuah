@@ -28,6 +28,11 @@ namespace Manajemen_Distribusi_Buah
 
         private void btnlogin_Click(object sender, EventArgs e)
         {
+            if (txtusername.Text == "" || txtpassword.Text == "")
+            {
+                MessageBox.Show("Username dan Password tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
         }
     }
