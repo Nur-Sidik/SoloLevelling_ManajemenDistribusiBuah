@@ -34,6 +34,12 @@ namespace Manajemen_Distribusi_Buah
             mitra.ShowDialog();
         }
 
+        private void btnpanen_Click(object sender, EventArgs e)
+        {
+            FormPanen panen = new FormPanen();
+            panen.ShowDialog();
+        }
+
 
     }
 }
