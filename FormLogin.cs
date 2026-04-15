@@ -34,6 +34,42 @@ namespace Manajemen_Distribusi_Buah
                 return;
             }
 
+            try
+            {
+                conn.Open();
+
+                string query = "SELECT COUNT(*) FROM Admin WHERE username = @username AND password = @password";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@username", txtusername.Text);
+                cmd.Parameters.AddWithValue("@password", txtpassword.Text);
+
+                int count = (int)cmd.ExecuteScalar();
+
+                if (count > 0)
+                {
+                    MessageBox.Show("Login Berhasil!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    FormUtama utama = new FormUtama();
+                    utama.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Username atau Password salah!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Terjadi kesalahan koneksi: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
         }
     }
 }
