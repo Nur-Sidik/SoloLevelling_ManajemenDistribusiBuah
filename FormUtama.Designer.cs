@@ -57,6 +57,7 @@
             this.btnpetani.TabIndex = 1;
             this.btnpetani.Text = "Kelola Data Petani";
             this.btnpetani.UseVisualStyleBackColor = true;
+            this.btnpetani.Click += new System.EventHandler(this.btnpetani_Click_1);
             // 
             // btnlaporan
             // 
@@ -141,6 +142,7 @@
             this.Controls.Add(this.label1);
             this.Name = "FormUtama";
             this.Text = "FormUtama";
+            this.Load += new System.EventHandler(this.FormUtama_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

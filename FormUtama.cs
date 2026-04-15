@@ -16,5 +16,18 @@ namespace Manajemen_Distribusi_Buah
         {
             InitializeComponent();
         }
+
+        private void FormUtama_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnpetani_Click(object sender, EventArgs e)
+        {
+            FormPetani petani = new FormPetani();
+            petani.ShowDialog();
+        }
+
+
     }
 }
