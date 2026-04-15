@@ -14,7 +14,7 @@ namespace Manajemen_Distribusi_Buah
     public partial class FormLogin : Form
     {
         private readonly SqlConnection conn;
-        private readonly string connectionString = "Data Source=MSI\\UNKNOWNMEMBER;Initial Catalog=DBDistribusiBuah;Integrated Security=True";
+        private readonly string connectionString = "Data Source=MSI\\UNKNOWNMEMBER;Initial Catalog=ManajemenBuah;Integrated Security=True";
         public FormLogin()
         {
             InitializeComponent();
