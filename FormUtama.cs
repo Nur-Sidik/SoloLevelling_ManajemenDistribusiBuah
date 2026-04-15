@@ -52,5 +52,17 @@ namespace Manajemen_Distribusi_Buah
             laporan.ShowDialog();
         }
 
- 
+        private void btnlogout_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Apakah Anda yakin ingin logout?", "Konfirmasi Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+            {
+                FormLogin login = new FormLogin();
+                login.Show();
+                this.Hide();
+            }
+        }
+
+  
+    }
 }
