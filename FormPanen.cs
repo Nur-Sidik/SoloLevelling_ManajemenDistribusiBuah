@@ -177,7 +177,65 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
-       
+        private void btnHapus_Click(object sender, EventArgs e)
+        {
+            if (txtid.Text == "") return;
+
+            DialogResult dialog = MessageBox.Show("Apakah Anda yakin ingin menghapus catatan panen ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialog == DialogResult.Yes)
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    try
+                    {
+                        conn.Open();
+                        string query = "DELETE FROM Hasil_Panen WHERE id_panen = @id";
+                        using (SqlCommand cmd = new SqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@id", txtid.Text);
+                            cmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Data berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadData();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void btnCari_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"SELECT hp.id_panen AS 'ID', p.nama_petani AS 'Nama Petani', hp.jenis_buah AS 'Jenis Buah', 
+                                            hp.tgl_panen AS 'Tanggal Panen', hp.stok_tersisa AS 'Stok (Kg)' 
+                                     FROM Hasil_Panen hp 
+                                     JOIN Petani p ON hp.id_petani = p.id_petani 
+                                     WHERE hp.jenis_buah LIKE @cari OR p.nama_petani LIKE @cari";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@cari", "%" + txtcari.Text + "%");
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            DataTable dt = new DataTable();
+                            dt.Load(reader);
+                            dgvpanen.DataSource = dt;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
         }
     }
 }
