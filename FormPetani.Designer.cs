@@ -106,6 +106,7 @@
             this.btnsimpan.TabIndex = 6;
             this.btnsimpan.Text = "Simpan";
             this.btnsimpan.UseVisualStyleBackColor = false;
+            this.btnsimpan.Click += new System.EventHandler(this.btnSimpan_Click);
             // 
             // btnubah
             // 
@@ -116,6 +117,7 @@
             this.btnubah.TabIndex = 7;
             this.btnubah.Text = "Ubah";
             this.btnubah.UseVisualStyleBackColor = false;
+            this.btnubah.Click += new System.EventHandler(this.btnUbah_Click);
             // 
             // btnhapus
             // 
@@ -126,6 +128,7 @@
             this.btnhapus.TabIndex = 8;
             this.btnhapus.Text = "Hapus";
             this.btnhapus.UseVisualStyleBackColor = false;
+            this.btnhapus.Click += new System.EventHandler(this.btnHapus_Click);
             // 
             // btntampilkan
             // 
@@ -136,6 +139,7 @@
             this.btntampilkan.TabIndex = 9;
             this.btntampilkan.Text = "Tampilkan Data";
             this.btntampilkan.UseVisualStyleBackColor = false;
+            this.btntampilkan.Click += new System.EventHandler(this.btnTampil_Click);
             // 
             // label4
             // 
@@ -161,6 +165,7 @@
             this.btncari.TabIndex = 12;
             this.btncari.Text = "Search";
             this.btncari.UseVisualStyleBackColor = true;
+            this.btncari.Click += new System.EventHandler(this.btnCari_Click);
             // 
             // dgvpetani
             // 
@@ -169,6 +174,7 @@
             this.dgvpetani.Name = "dgvpetani";
             this.dgvpetani.Size = new System.Drawing.Size(308, 103);
             this.dgvpetani.TabIndex = 13;
+            this.dgvpetani.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPetani_CellClick);
             // 
             // label5
             // 
@@ -178,7 +184,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(366, 31);
             this.label5.TabIndex = 14;
-            this.label5.Text = "Selamat Datang Di From Petani!\r\n";
+            this.label5.Text = "Selamat Datang Di Form Petani!\r\n";
             // 
             // FormPetani
             // 

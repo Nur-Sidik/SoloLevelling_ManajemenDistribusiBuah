@@ -29,7 +29,7 @@ namespace Manajemen_Distribusi_Buah
 
         private void FormPetani_Load(object sender, EventArgs e)
         {
-
+            LoadData();
         }
 
         private void btnTampil_Click(object sender, EventArgs e)
