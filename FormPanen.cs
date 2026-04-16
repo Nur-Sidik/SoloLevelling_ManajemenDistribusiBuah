@@ -58,7 +58,44 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        private void btnTampil_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
 
+        private void LoadData()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"SELECT hp.id_panen AS 'ID', 
+                                            p.nama_petani AS 'Nama Petani', 
+                                            hp.jenis_buah AS 'Jenis Buah', 
+                                            hp.tgl_panen AS 'Tanggal Panen', 
+                                            hp.stok_tersisa AS 'Stok (Kg)' 
+                                     FROM Hasil_Panen hp 
+                                     JOIN Petani p ON hp.id_petani = p.id_petani";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            DataTable dt = new DataTable();
+                            dt.Load(reader);
+                            dgvpanen.DataSource = dt;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+        }
+
+       
         }
     }
 }
