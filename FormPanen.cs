@@ -95,6 +95,40 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        private void btnSimpan_Click(object sender, EventArgs e)
+        {
+            if (cmbpetani.SelectedValue == null || txtbuah.Text == "" || txtstok.Text == "")
+            {
+                MessageBox.Show("Semua data wajib diisi!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "INSERT INTO Hasil_Panen (id_petani, jenis_buah, tgl_panen, stok_tersisa) VALUES (@id_petani, @jenis, @tgl, @stok)";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id_petani", cmbpetani.SelectedValue);
+                        cmd.Parameters.AddWithValue("@jenis", txtbuah.Text);
+                        cmd.Parameters.AddWithValue("@tgl", dtppanen.Value.Date);
+                        cmd.Parameters.AddWithValue("@stok", Convert.ToDouble(txtstok.Text));
+
+                        cmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Data Hasil Panen berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadData();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Pastikan stok diisi dengan angka! Detail: " + ex.Message);
+                }
+            }
+        }
+
        
         }
     }
