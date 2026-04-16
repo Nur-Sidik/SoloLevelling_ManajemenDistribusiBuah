@@ -129,6 +129,54 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        private void dgvPanen_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvpanen.Rows[e.RowIndex];
+                txtid.Text = row.Cells["ID"].Value.ToString();
+                cmbpetani.Text = row.Cells["Nama Petani"].Value.ToString();
+                txtbuah.Text = row.Cells["Jenis Buah"].Value.ToString();
+                dtppanen.Value = Convert.ToDateTime(row.Cells["Tanggal Panen"].Value);
+                txtstok.Text = row.Cells["Stok (Kg)"].Value.ToString();
+            }
+        }
+
+        private void btnUbah_Click(object sender, EventArgs e)
+        {
+            if (txtid.Text == "") return;
+
+            DialogResult dialog = MessageBox.Show("Apakah Anda yakin ingin mengubah data ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialog == DialogResult.Yes)
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    try
+                    {
+                        conn.Open();
+                        string query = "UPDATE Hasil_Panen SET id_petani = @id_petani, jenis_buah = @jenis, tgl_panen = @tgl, stok_tersisa = @stok WHERE id_panen = @id";
+                        using (SqlCommand cmd = new SqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@id_petani", cmbpetani.SelectedValue);
+                            cmd.Parameters.AddWithValue("@jenis", txtbuah.Text);
+                            cmd.Parameters.AddWithValue("@tgl", dtppanen.Value.Date);
+                            cmd.Parameters.AddWithValue("@stok", Convert.ToDouble(txtstok.Text));
+                            cmd.Parameters.AddWithValue("@id", txtid.Text);
+
+                            cmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Data berhasil diubah!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadData();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
+            }
+        }
+
        
         }
     }
