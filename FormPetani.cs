@@ -31,6 +31,7 @@ namespace Manajemen_Distribusi_Buah
 
         private void FormPetani_Load(object sender, EventArgs e)
         {
+            bindingNavigator1.BindingSource = bindingSourcePetani;
             LoadData();
         }
 
@@ -202,6 +203,23 @@ namespace Manajemen_Distribusi_Buah
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "DELETE FROM Petani; INSERT INTO Petani SELECT * FROM Petani_Backup;";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data berhasil direset ke kondisi awal!");
+                    LoadData();
+                }
+            }
+            catch (Exception ex) { MessageBox.Show("Reset gagal: " + ex.Message); }
         }
     }
 
