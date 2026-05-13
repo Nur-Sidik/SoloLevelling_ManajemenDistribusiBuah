@@ -63,6 +63,12 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        private void btnbuah_Click(object sender, EventArgs e)
+        {
+            FormBuah fbuah = new FormBuah();
+            fbuah.ShowDialog();
+        }
+
         private void FormUtama_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
