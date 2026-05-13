@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormBuah.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBuah.Designer.cs">
+      <DependentUpon>FormBuah.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormDistribusi.cs">
       <SubType>Form</SubType>
     </Compile>
