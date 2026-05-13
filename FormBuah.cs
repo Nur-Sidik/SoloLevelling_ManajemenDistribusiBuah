@@ -103,5 +103,48 @@ namespace Manajemen_Distribusi_Buah
             cmbjenis.DataBindings.Add("Text", bindingSourceBuah, "Jenis");
             txtharga.DataBindings.Add("Text", bindingSourceBuah, "Harga/Kg");
         }
-    }
+
+        private void txtnama_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtharga_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbjenis_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtcari_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnsimpan_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_InsertBuah", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@nama", txtnama.Text);
+                    cmd.Parameters.AddWithValue("@jenis", cmbjenis.Text);
+                    cmd.Parameters.AddWithValue("@harga", decimal.Parse(txtharga.Text));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data buah berhasil ditambahkan!");
+                    LoadData();
+                }
+                catch (Exception ex) { MessageBox.Show("Error Simpan: " + ex.Message); }
+            }
+        }
+
+
+    
 }
