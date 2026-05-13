@@ -24,5 +24,48 @@ namespace Manajemen_Distribusi_Buah
             InitializeComponent();
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
+
+        private void btncari_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Memanggil Stored Procedure untuk pencarian
+                    SqlCommand cmd = new SqlCommand("sp_SearchBuah", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Parameter '@cari' harus sama dengan yang ada di SQL Server
+                    cmd.Parameters.AddWithValue("@cari", txtcari.Text);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    // Tampilkan hasil ke DataGridView melalui BindingSource
+                    bindingSourceBuah.DataSource = dt;
+                    dgvbuah.DataSource = bindingSourceBuah;
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Data buah tidak ditemukan.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Pencarian Gagal: " + ex.Message);
+                }
+            }
+        }
+
+        private void FormBuah_Load(object sender, EventArgs e)
+        {
+            bindingNavigator1.BindingSource = bindingSourceBuah;
+            LoadData();
+        }
+    }
 }
