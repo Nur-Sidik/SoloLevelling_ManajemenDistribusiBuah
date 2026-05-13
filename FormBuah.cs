@@ -67,5 +67,28 @@ namespace Manajemen_Distribusi_Buah
             bindingNavigator1.BindingSource = bindingSourceBuah;
             LoadData();
         }
+
+        private void LoadData()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    // Memanggil VIEW untuk keamanan sesuai instruksi dosen
+                    SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM vw_Buah", conn);
+                    dtBuah = new DataTable();
+                    da.Fill(dtBuah);
+
+                    // Hubungkan data ke BindingSource agar navigator berfungsi
+                    bindingSourceBuah.DataSource = dtBuah;
+                    dgvbuah.DataSource = bindingSourceBuah;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal memuat data buah: " + ex.Message);
+                }
+            }
+        }
     }
 }
