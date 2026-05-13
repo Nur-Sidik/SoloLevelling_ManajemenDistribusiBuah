@@ -145,6 +145,14 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        private void btnreset_Click(object sender, EventArgs e)
+        {
+            {
+                LoadData();
+                MessageBox.Show("Data di-refresh!");
+            }
+        }
+
 
     
 }
