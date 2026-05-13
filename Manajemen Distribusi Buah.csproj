@@ -96,6 +96,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormBuah.resx">
+      <DependentUpon>FormBuah.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormDistribusi.resx">
       <DependentUpon>FormDistribusi.cs</DependentUpon>
     </EmbeddedResource>

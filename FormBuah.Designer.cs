@@ -77,6 +77,7 @@
             this.txtnama.Name = "txtnama";
             this.txtnama.Size = new System.Drawing.Size(147, 20);
             this.txtnama.TabIndex = 1;
+            this.txtnama.TextChanged += new System.EventHandler(this.txtnama_TextChanged);
             // 
             // txtharga
             // 
@@ -84,6 +85,7 @@
             this.txtharga.Name = "txtharga";
             this.txtharga.Size = new System.Drawing.Size(147, 20);
             this.txtharga.TabIndex = 3;
+            this.txtharga.TextChanged += new System.EventHandler(this.txtharga_TextChanged);
             // 
             // lblharga
             // 
@@ -105,6 +107,7 @@
             this.cmbjenis.Name = "cmbjenis";
             this.cmbjenis.Size = new System.Drawing.Size(147, 21);
             this.cmbjenis.TabIndex = 4;
+            this.cmbjenis.SelectedIndexChanged += new System.EventHandler(this.cmbjenis_SelectedIndexChanged);
             // 
             // lbljenis
             // 
@@ -126,39 +129,47 @@
             // 
             // btnsimpan
             // 
+            this.btnsimpan.BackColor = System.Drawing.Color.Lime;
             this.btnsimpan.Location = new System.Drawing.Point(61, 313);
             this.btnsimpan.Name = "btnsimpan";
             this.btnsimpan.Size = new System.Drawing.Size(75, 23);
             this.btnsimpan.TabIndex = 8;
             this.btnsimpan.Text = "Simpan";
-            this.btnsimpan.UseVisualStyleBackColor = true;
+            this.btnsimpan.UseVisualStyleBackColor = false;
+            this.btnsimpan.Click += new System.EventHandler(this.btnsimpan_Click);
             // 
             // btnubah
             // 
+            this.btnubah.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.btnubah.Location = new System.Drawing.Point(170, 313);
             this.btnubah.Name = "btnubah";
             this.btnubah.Size = new System.Drawing.Size(75, 23);
             this.btnubah.TabIndex = 9;
             this.btnubah.Text = "Ubah";
-            this.btnubah.UseVisualStyleBackColor = true;
+            this.btnubah.UseVisualStyleBackColor = false;
+            this.btnubah.Click += new System.EventHandler(this.btnubah_Click);
             // 
             // btnhapus
             // 
+            this.btnhapus.BackColor = System.Drawing.Color.Red;
             this.btnhapus.Location = new System.Drawing.Point(61, 374);
             this.btnhapus.Name = "btnhapus";
             this.btnhapus.Size = new System.Drawing.Size(75, 23);
             this.btnhapus.TabIndex = 10;
             this.btnhapus.Text = "Hapus";
-            this.btnhapus.UseVisualStyleBackColor = true;
+            this.btnhapus.UseVisualStyleBackColor = false;
+            this.btnhapus.Click += new System.EventHandler(this.btnhapus_Click);
             // 
             // btnreset
             // 
+            this.btnreset.BackColor = System.Drawing.Color.Yellow;
             this.btnreset.Location = new System.Drawing.Point(170, 374);
             this.btnreset.Name = "btnreset";
             this.btnreset.Size = new System.Drawing.Size(75, 23);
             this.btnreset.TabIndex = 11;
             this.btnreset.Text = "Reset";
-            this.btnreset.UseVisualStyleBackColor = true;
+            this.btnreset.UseVisualStyleBackColor = false;
+            this.btnreset.Click += new System.EventHandler(this.btnreset_Click);
             // 
             // btncari
             // 
@@ -176,6 +187,7 @@
             this.txtcari.Name = "txtcari";
             this.txtcari.Size = new System.Drawing.Size(277, 20);
             this.txtcari.TabIndex = 29;
+            this.txtcari.TextChanged += new System.EventHandler(this.txtcari_TextChanged);
             // 
             // label4
             // 
