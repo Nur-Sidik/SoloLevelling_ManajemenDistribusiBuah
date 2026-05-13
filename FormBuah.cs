@@ -153,6 +153,41 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        private void btnubah_Click(object sender, EventArgs e)
+        {
+            if (bindingSourceBuah.Current == null)
+            {
+                MessageBox.Show("Pilih data yang akan diubah dari tabel terlebih dahulu!");
+                return;
+            }
 
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Ambil ID dari baris yang sedang aktif di BindingSource
+                    DataRowView row = (DataRowView)bindingSourceBuah.Current;
+                    int idBuah = Convert.ToInt32(row["ID"]);
+
+                    SqlCommand cmd = new SqlCommand("sp_UpdateBuah", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Parameter sesuai dengan Stored Procedure di SQL Server
+                    cmd.Parameters.AddWithValue("@id", idBuah);
+                    cmd.Parameters.AddWithValue("@nama", txtnama.Text);
+                    cmd.Parameters.AddWithValue("@jenis", cmbjenis.Text);
+                    cmd.Parameters.AddWithValue("@harga", decimal.Parse(txtharga.Text));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Data buah berhasil diperbarui via Stored Procedure!", "Sukses");
+                    LoadData();
+                }
+                catch (Exception ex) { MessageBox.Show("Gagal Update: " + ex.Message); }
+            }
+        }
+
+
+    }
     
 }
