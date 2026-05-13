@@ -187,7 +187,33 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        private void btnhapus_Click(object sender, EventArgs e)
+        {
+            if (bindingSourceBuah.Current == null) return;
 
+            DialogResult dr = MessageBox.Show("Apakah Anda yakin ingin menghapus buah ini?", "Konfirmasi Hapus", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    try
+                    {
+                        DataRowView row = (DataRowView)bindingSourceBuah.Current;
+                        int idBuah = Convert.ToInt32(row["ID"]);
+
+                        SqlCommand cmd = new SqlCommand("sp_DeleteBuah", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", idBuah);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Data berhasil dihapus!");
+                        LoadData();
+                    }
+                    catch (Exception ex) { MessageBox.Show("Gagal Hapus: " + ex.Message); }
+                }
+            }
+        }
     }
     
 }
