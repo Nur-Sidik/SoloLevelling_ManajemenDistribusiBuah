@@ -83,12 +83,25 @@ namespace Manajemen_Distribusi_Buah
                     // Hubungkan data ke BindingSource agar navigator berfungsi
                     bindingSourceBuah.DataSource = dtBuah;
                     dgvbuah.DataSource = bindingSourceBuah;
+
+                    BindControls();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Gagal memuat data buah: " + ex.Message);
                 }
             }
+        }
+
+        private void BindControls()
+        {
+            txtnama.DataBindings.Clear();
+            cmbjenis.DataBindings.Clear();
+            txtharga.DataBindings.Clear();
+
+            txtnama.DataBindings.Add("Text", bindingSourceBuah, "Nama Buah");
+            cmbjenis.DataBindings.Add("Text", bindingSourceBuah, "Jenis");
+            txtharga.DataBindings.Add("Text", bindingSourceBuah, "Harga/Kg");
         }
     }
 }
