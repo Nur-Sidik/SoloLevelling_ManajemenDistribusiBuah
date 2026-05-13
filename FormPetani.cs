@@ -13,6 +13,8 @@ namespace Manajemen_Distribusi_Buah
 {
     public partial class FormPetani : Form
     {
+        private BindingSource bindingSourcePetani = new BindingSource();
+        private DataTable dtPetani = new DataTable();
         private readonly SqlConnection conn;
         private readonly string connectionString = "Data Source=MSI\\UNKNOWNMEMBER;Initial Catalog=ManajemenBuah;Integrated Security=True";
 
@@ -44,16 +46,13 @@ namespace Manajemen_Distribusi_Buah
                 try
                 {
                     conn.Open();
-                    string query = "SELECT id_petani AS 'ID', nama_petani AS 'Nama Petani', alamat AS 'Alamat' FROM Petani";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            DataTable dt = new DataTable();
-                            dt.Load(reader);
-                            dgvpetani.DataSource = dt;
-                        }
-                    }
+                    string query = "SELECT * FROM vw_Petani";
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    bindingSourcePetani.DataSource = dt;
+                    dgvpetani.DataSource = bindingSourcePetani;
                 }
                 catch (Exception ex)
                 {
