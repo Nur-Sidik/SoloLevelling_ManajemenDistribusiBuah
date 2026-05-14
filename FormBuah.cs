@@ -157,7 +157,7 @@ namespace Manajemen_Distribusi_Buah
         {
             if (bindingSourceBuah.Current == null)
             {
-                MessageBox.Show("Pilih data yang akan diubah dari tabel terlebih dahulu!");
+                MessageBox.Show("Pilih data yang akan diubah terlebih dahulu!");
                 return;
             }
 
@@ -165,14 +165,12 @@ namespace Manajemen_Distribusi_Buah
             {
                 try
                 {
-                    // Ambil ID dari baris yang sedang aktif di BindingSource
                     DataRowView row = (DataRowView)bindingSourceBuah.Current;
                     int idBuah = Convert.ToInt32(row["ID"]);
 
                     SqlCommand cmd = new SqlCommand("sp_UpdateBuah", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    // Parameter sesuai dengan Stored Procedure di SQL Server
                     cmd.Parameters.AddWithValue("@id", idBuah);
                     cmd.Parameters.AddWithValue("@nama", txtnama.Text);
                     cmd.Parameters.AddWithValue("@jenis", cmbjenis.Text);
@@ -180,7 +178,7 @@ namespace Manajemen_Distribusi_Buah
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Data buah berhasil diperbarui via Stored Procedure!", "Sukses");
+                    MessageBox.Show("Data buah berhasil diperbarui!");
                     LoadData();
                 }
                 catch (Exception ex) { MessageBox.Show("Gagal Update: " + ex.Message); }
@@ -191,7 +189,7 @@ namespace Manajemen_Distribusi_Buah
         {
             if (bindingSourceBuah.Current == null) return;
 
-            DialogResult dr = MessageBox.Show("Apakah Anda yakin ingin menghapus buah ini?", "Konfirmasi Hapus", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult dr = MessageBox.Show("Yakin ingin menghapus buah ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
