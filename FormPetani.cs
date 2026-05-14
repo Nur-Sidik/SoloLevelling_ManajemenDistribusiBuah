@@ -221,6 +221,31 @@ namespace Manajemen_Distribusi_Buah
             }
             catch (Exception ex) { MessageBox.Show("Reset gagal: " + ex.Message); }
         }
-    }
 
+        private void btninjection_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    // Kueri rentan: Langsung tembak ke tabel Petani pakai gabungan string
+                    string query = "UPDATE Petani SET Nama Petani = 'HACKED" + txtnama.Text + "'";
+
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    // Tampilkan hasil curian data ke DataGridView Petani
+                    dgvpetani.DataSource = dt;
+
+                    MessageBox.Show("Kueri Rentan Dieksekusi:\n\n" + query, "Demo SQL Injection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal eksekusi: " + ex.Message);
+                }
+            }
+        }
+    }
 }

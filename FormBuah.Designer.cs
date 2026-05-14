@@ -125,6 +125,7 @@
             this.dgvbuah.Name = "dgvbuah";
             this.dgvbuah.Size = new System.Drawing.Size(419, 241);
             this.dgvbuah.TabIndex = 6;
+            this.dgvbuah.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvbuah_CellClick);
             this.dgvbuah.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // btnsimpan

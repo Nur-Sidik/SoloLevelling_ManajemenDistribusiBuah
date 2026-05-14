@@ -201,7 +201,7 @@ namespace Manajemen_Distribusi_Buah
                     try
                     {
                         DataRowView row = (DataRowView)bindingSourceBuah.Current;
-                        int idBuah = Convert.ToInt32(row["ID"]);
+                        int idBuah = Convert.ToInt32(row["id_buah"]);
 
                         SqlCommand cmd = new SqlCommand("sp_DeleteBuah", conn);
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -224,9 +224,9 @@ namespace Manajemen_Distribusi_Buah
                 DataGridViewRow row = dgvbuah.Rows[e.RowIndex];
 
                 // Pindahkan isi tabel ke TextBox secara manual saat diklik
-                txtnama.Text = row.Cells["Nama Buah"].Value.ToString();
-                cmbjenis.Text = row.Cells["Jenis"].Value.ToString();
-                txtharga.Text = row.Cells["Harga/Kg"].Value.ToString();
+                txtnama.Text = row.Cells["nama_buah"].Value.ToString();
+                cmbjenis.Text = row.Cells["jenis_buah"].Value.ToString();
+                txtharga.Text = row.Cells["harga_per_kg"].Value.ToString();
             }
         }
     }

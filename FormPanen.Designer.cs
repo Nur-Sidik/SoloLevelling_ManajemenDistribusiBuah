@@ -160,9 +160,10 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(98, 192);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 13);
+            this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 17;
-            this.label3.Text = "Jenis Buah";
+            this.label3.Text = "ID Buah";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label2
             // 

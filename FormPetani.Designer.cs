@@ -58,6 +58,7 @@
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.btnReset = new System.Windows.Forms.Button();
+            this.btninjection = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvpetani)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
@@ -327,11 +328,22 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // btninjection
+            // 
+            this.btninjection.Location = new System.Drawing.Point(199, 359);
+            this.btninjection.Name = "btninjection";
+            this.btninjection.Size = new System.Drawing.Size(109, 23);
+            this.btninjection.TabIndex = 17;
+            this.btninjection.Text = "Test SQL";
+            this.btninjection.UseVisualStyleBackColor = true;
+            this.btninjection.Click += new System.EventHandler(this.btninjection_Click);
+            // 
             // FormPetani
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btninjection);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.label5);
@@ -391,5 +403,6 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btninjection;
     }
 }

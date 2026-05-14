@@ -41,7 +41,12 @@ namespace Manajemen_Distribusi_Buah
                 try
                 {
                     conn.Open();
-                    string query = "SELECT id_panen, jenis_buah + ' (Sisa: ' + CAST(stok_tersisa AS VARCHAR) + ' kg)' AS info FROM Hasil_Panen WHERE stok_tersisa > 0";
+                    
+                    string query = @"SELECT hp.id_panen, b.nama_buah + ' (Sisa: ' + CAST(hp.stok_tersisa AS VARCHAR) + ' kg)' AS info 
+                             FROM Hasil_Panen hp
+                             JOIN Buah b ON hp.id_buah = b.id_buah
+                             WHERE hp.stok_tersisa > 0";
+
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -50,7 +55,7 @@ namespace Manajemen_Distribusi_Buah
                     cmbpanen.ValueMember = "id_panen";
                     cmbpanen.SelectedIndex = -1;
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
+                catch (Exception ex) { MessageBox.Show("Error Combo Panen: " + ex.Message); }
             }
         }
 
@@ -80,17 +85,20 @@ namespace Manajemen_Distribusi_Buah
                 try
                 {
                     conn.Open();
-                    string query = @"SELECT d.id_distribusi AS 'ID', p.jenis_buah AS 'Buah', m.nama_mitra AS 'Mitra', 
-                                     d.tgl_distribusi AS 'Tanggal', d.qty_kg AS 'Qty (Kg)'
-                                     FROM Distribusi d
-                                     JOIN Hasil_Panen p ON d.id_panen = p.id_panen
-                                     JOIN Mitra_Pembeli m ON d.id_mitra = m.id_mitra";
+                    // Kueri diperbarui: Menambahkan JOIN ke tabel Buah (b)
+                    string query = @"SELECT d.id_distribusi AS 'ID', b.nama_buah AS 'Buah', m.nama_mitra AS 'Mitra', 
+                             d.tgl_distribusi AS 'Tanggal', d.qty_kg AS 'Qty (Kg)'
+                             FROM Distribusi d
+                             JOIN Hasil_Panen p ON d.id_panen = p.id_panen
+                             JOIN Buah b ON p.id_buah = b.id_buah
+                             JOIN Mitra_Pembeli m ON d.id_mitra = m.id_mitra";
+
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     dgvdistribusi.DataSource = dt;
                 }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
+                catch (Exception ex) { MessageBox.Show("Error Load Data: " + ex.Message); }
             }
         }
 

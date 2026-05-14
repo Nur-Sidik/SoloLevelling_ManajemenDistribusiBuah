@@ -76,26 +76,15 @@ namespace Manajemen_Distribusi_Buah
                 try
                 {
                     conn.Open();
-                    string query = @"SELECT d.tgl_distribusi AS 'Tanggal', 
-                                            p.nama_petani AS 'Asal Petani',
-                                            hp.jenis_buah AS 'Jenis Buah', 
-                                            m.nama_mitra AS 'Tujuan Mitra',
-                                            d.qty_kg AS 'Jumlah (Kg)'
-                                     FROM Distribusi d
-                                     JOIN Hasil_Panen hp ON d.id_panen = hp.id_panen
-                                     JOIN Petani p ON hp.id_petani = p.id_petani
-                                     JOIN Mitra_Pembeli m ON d.id_mitra = m.id_mitra
-                                     ORDER BY d.tgl_distribusi DESC";
+                    // Memanggil VIEW vw_Distribusi agar tidak error dan aman dari SQL Injection
+                    string query = "SELECT * FROM vw_Distribusi ORDER BY Tanggal DESC";
 
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     dgvlaporan.DataSource = dt;
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Gagal memuat riwayat: " + ex.Message);
-                }
+                catch (Exception ex) { MessageBox.Show("Gagal memuat riwayat: " + ex.Message); }
             }
         }
     }

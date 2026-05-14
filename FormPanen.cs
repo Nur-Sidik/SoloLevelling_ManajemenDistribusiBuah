@@ -237,5 +237,10 @@ namespace Manajemen_Distribusi_Buah
                 }
             }
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
