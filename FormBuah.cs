@@ -79,12 +79,12 @@ namespace Manajemen_Distribusi_Buah
                     SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM vw_Buah", conn);
                     dtBuah = new DataTable();
                     da.Fill(dtBuah);
-
+                    dtBuah.Columns["ID"].AllowDBNull = true;
                     // Hubungkan data ke BindingSource agar navigator berfungsi
                     bindingSourceBuah.DataSource = dtBuah;
                     dgvbuah.DataSource = bindingSourceBuah;
 
-                    BindControls();
+                    //BindControls();
                 }
                 catch (Exception ex)
                 {
@@ -140,6 +140,10 @@ namespace Manajemen_Distribusi_Buah
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Data buah berhasil ditambahkan!");
                     LoadData();
+
+                    txtnama.Clear();
+                    txtharga.Clear();
+                    cmbjenis.SelectedIndex = -1;
                 }
                 catch (Exception ex) { MessageBox.Show("Error Simpan: " + ex.Message); }
             }
