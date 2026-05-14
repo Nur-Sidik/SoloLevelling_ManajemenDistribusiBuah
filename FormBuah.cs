@@ -216,6 +216,19 @@ namespace Manajemen_Distribusi_Buah
                 }
             }
         }
+
+        private void dgvbuah_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvbuah.Rows[e.RowIndex];
+
+                // Pindahkan isi tabel ke TextBox secara manual saat diklik
+                txtnama.Text = row.Cells["Nama Buah"].Value.ToString();
+                cmbjenis.Text = row.Cells["Jenis"].Value.ToString();
+                txtharga.Text = row.Cells["Harga/Kg"].Value.ToString();
+            }
+        }
     }
     
 }
