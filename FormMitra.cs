@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO; 
+using ExcelDataReader;
 
 namespace Manajemen_Distribusi_Buah
 {
     public partial class FormMitra : Form
     {
-
         private readonly SqlConnection conn;
         private readonly string connectionString = "Data Source=MSI\\UNKNOWNMEMBER;Initial Catalog=ManajemenBuah;Integrated Security=True";
 
@@ -195,5 +190,70 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
+        // =============================================================
+        // FITUR IMPORT EXCEL
+        // =============================================================
+
+        private void btnImportExcel_Click_1(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "Excel Workbook|*.xlsx;*.xls", ValidateNames = true })
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
+                        {
+                            using (var reader = ExcelReaderFactory.CreateReader(stream))
+                            {
+                                // Membaca file Excel dan menjadikannya DataSet
+                                var result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                                {
+                                    ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
+                                });
+
+                                DataTable dtExcel = result.Tables[0]; // Mengambil Sheet pertama
+                                int barisSukses = 0;
+
+                                using (SqlConnection conn = new SqlConnection(connectionString))
+                                {
+                                    conn.Open();
+
+                                    // Looping setiap baris di Excel
+                                    foreach (DataRow row in dtExcel.Rows)
+                                    {
+                                        try
+                                        {
+                                            // Asumsi format kolom Excel: Kolom 1 = Nama Mitra, Kolom 2 = No Mitra, Kolom 3 = Kategori
+                                            string query = "INSERT INTO Mitra_Pembeli (nama_mitra, no_mitra, kategori) VALUES (@nama, @no, @kategori)";
+                                            using (SqlCommand cmd = new SqlCommand(query, conn))
+                                            {
+                                                cmd.Parameters.AddWithValue("@nama", row[0].ToString());
+                                                cmd.Parameters.AddWithValue("@no", row[1].ToString());
+                                                cmd.Parameters.AddWithValue("@kategori", row[2].ToString());
+                                                cmd.ExecuteNonQuery();
+                                                barisSukses++;
+                                            }
+                                        }
+                                        catch (Exception)
+                                        {
+                                            // Jika ada baris yang error (misal No Mitra duplikat), lewati dan lanjut ke baris berikutnya
+                                            continue;
+                                        }
+                                    }
+                                }
+
+                                MessageBox.Show($"Import selesai!\nBerhasil menambahkan {barisSukses} data mitra baru.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                LoadData(); // Refresh DataGridView
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Gagal membaca file Excel. Pastikan file tidak sedang dibuka di aplikasi lain.\nDetail Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
     }
 }

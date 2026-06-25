@@ -57,9 +57,12 @@
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+            this.pbFotoBuah = new System.Windows.Forms.PictureBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvbuah)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFotoBuah)).BeginInit();
             this.SuspendLayout();
             // 
             // lblnama
@@ -123,7 +126,7 @@
             this.dgvbuah.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvbuah.Location = new System.Drawing.Point(336, 139);
             this.dgvbuah.Name = "dgvbuah";
-            this.dgvbuah.Size = new System.Drawing.Size(419, 241);
+            this.dgvbuah.Size = new System.Drawing.Size(419, 169);
             this.dgvbuah.TabIndex = 6;
             this.dgvbuah.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvbuah_CellClick);
             this.dgvbuah.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -323,11 +326,32 @@
             this.bindingNavigator1.TabIndex = 7;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
+            // pbFotoBuah
+            // 
+            this.pbFotoBuah.Location = new System.Drawing.Point(336, 330);
+            this.pbFotoBuah.Name = "pbFotoBuah";
+            this.pbFotoBuah.Size = new System.Drawing.Size(120, 97);
+            this.pbFotoBuah.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbFotoBuah.TabIndex = 69;
+            this.pbFotoBuah.TabStop = false;
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Location = new System.Drawing.Point(474, 343);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowse.TabIndex = 70;
+            this.btnBrowse.Text = "Pilih Foto";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
             // FormBuah
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnBrowse);
+            this.Controls.Add(this.pbFotoBuah);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btncari);
             this.Controls.Add(this.txtcari);
@@ -351,6 +375,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFotoBuah)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -385,5 +410,7 @@
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.BindingNavigator bindingNavigator1;
+        private System.Windows.Forms.PictureBox pbFotoBuah;
+        private System.Windows.Forms.Button btnBrowse;
     }
 }

@@ -38,6 +38,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lbljumlah = new System.Windows.Forms.Label();
+            this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
             ((System.ComponentModel.ISupportInitialize)(this.dgvlaporan)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,15 +64,15 @@
             // dgvlaporan
             // 
             this.dgvlaporan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvlaporan.Location = new System.Drawing.Point(132, 252);
+            this.dgvlaporan.Location = new System.Drawing.Point(12, 253);
             this.dgvlaporan.Name = "dgvlaporan";
-            this.dgvlaporan.Size = new System.Drawing.Size(569, 157);
+            this.dgvlaporan.Size = new System.Drawing.Size(411, 157);
             this.dgvlaporan.TabIndex = 65;
             // 
             // btnrefresh
             // 
             this.btnrefresh.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnrefresh.Location = new System.Drawing.Point(355, 206);
+            this.btnrefresh.Location = new System.Drawing.Point(132, 207);
             this.btnrefresh.Name = "btnrefresh";
             this.btnrefresh.Size = new System.Drawing.Size(109, 31);
             this.btnrefresh.TabIndex = 58;
@@ -133,11 +134,22 @@
             this.lbljumlah.TabIndex = 71;
             this.lbljumlah.Text = "0";
             // 
+            // crystalReportViewer1
+            // 
+            this.crystalReportViewer1.ActiveViewIndex = -1;
+            this.crystalReportViewer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.crystalReportViewer1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.crystalReportViewer1.Location = new System.Drawing.Point(459, 253);
+            this.crystalReportViewer1.Name = "crystalReportViewer1";
+            this.crystalReportViewer1.Size = new System.Drawing.Size(329, 150);
+            this.crystalReportViewer1.TabIndex = 74;
+            // 
             // FormLaporan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.crystalReportViewer1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lbljumlah);
             this.Controls.Add(this.label3);
@@ -168,5 +180,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lbljumlah;
+        private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
     }
 }

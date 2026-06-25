@@ -45,6 +45,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.cmbkategori = new System.Windows.Forms.ComboBox();
+            this.btnImportExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvmitra)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,7 +97,7 @@
             // btntampilkan
             // 
             this.btntampilkan.BackColor = System.Drawing.Color.Yellow;
-            this.btntampilkan.Location = new System.Drawing.Point(362, 373);
+            this.btntampilkan.Location = new System.Drawing.Point(446, 373);
             this.btntampilkan.Name = "btntampilkan";
             this.btntampilkan.Size = new System.Drawing.Size(109, 31);
             this.btntampilkan.TabIndex = 24;
@@ -210,11 +211,23 @@
             this.cmbkategori.Size = new System.Drawing.Size(161, 21);
             this.cmbkategori.TabIndex = 31;
             // 
+            // btnImportExcel
+            // 
+            this.btnImportExcel.BackColor = System.Drawing.Color.Cyan;
+            this.btnImportExcel.Location = new System.Drawing.Point(271, 373);
+            this.btnImportExcel.Name = "btnImportExcel";
+            this.btnImportExcel.Size = new System.Drawing.Size(113, 23);
+            this.btnImportExcel.TabIndex = 33;
+            this.btnImportExcel.Text = "Import Data Excel";
+            this.btnImportExcel.UseVisualStyleBackColor = false;
+            this.btnImportExcel.Click += new System.EventHandler(this.btnImportExcel_Click_1);
+            // 
             // FormMitra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnImportExcel);
             this.Controls.Add(this.cmbkategori);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -260,5 +273,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbkategori;
+        private System.Windows.Forms.Button btnImportExcel;
     }
 }

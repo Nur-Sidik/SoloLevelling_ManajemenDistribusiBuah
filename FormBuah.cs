@@ -229,6 +229,17 @@ namespace Manajemen_Distribusi_Buah
                 txtharga.Text = row.Cells["harga_per_kg"].Value.ToString();
             }
         }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog opf = new OpenFileDialog();
+            opf.Filter = "Choose Image(*.jpg;*.png;*.jpeg)|*.jpg;*.png;*.jpeg";
+
+            if (opf.ShowDialog() == DialogResult.OK)
+            {
+                pbFotoBuah.Image = Image.FromFile(opf.FileName);
+                pbFotoBuah.SizeMode = PictureBoxSizeMode.Zoom;
+            }
     }
     
 }

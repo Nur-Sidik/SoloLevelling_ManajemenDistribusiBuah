@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data;
 using System.Data.SqlClient;
+using CrystalDecisions.CrystalReports.Engine;
 
 namespace Manajemen_Distribusi_Buah
 {
@@ -33,6 +34,9 @@ namespace Manajemen_Distribusi_Buah
         {
             HitungRingkasan();
             TampilRiwayatLengkap();
+            LaporanDistribusi rpt = new LaporanDistribusi { };
+            crystalReportViewer1.ReportSource = rpt;
+            crystalReportViewer1.Refresh();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
