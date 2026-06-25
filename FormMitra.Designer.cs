@@ -46,6 +46,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cmbkategori = new System.Windows.Forms.ComboBox();
             this.btnImportExcel = new System.Windows.Forms.Button();
+            this.btnImportDatabase = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvmitra)).BeginInit();
             this.SuspendLayout();
             // 
@@ -222,11 +223,23 @@
             this.btnImportExcel.UseVisualStyleBackColor = false;
             this.btnImportExcel.Click += new System.EventHandler(this.btnImportExcel_Click_1);
             // 
+            // btnImportDatabase
+            // 
+            this.btnImportDatabase.BackColor = System.Drawing.Color.Cyan;
+            this.btnImportDatabase.Location = new System.Drawing.Point(271, 402);
+            this.btnImportDatabase.Name = "btnImportDatabase";
+            this.btnImportDatabase.Size = new System.Drawing.Size(113, 23);
+            this.btnImportDatabase.TabIndex = 34;
+            this.btnImportDatabase.Text = "Import Ke Database";
+            this.btnImportDatabase.UseVisualStyleBackColor = false;
+            this.btnImportDatabase.Click += new System.EventHandler(this.btnImportDatabase_Click);
+            // 
             // FormMitra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnImportDatabase);
             this.Controls.Add(this.btnImportExcel);
             this.Controls.Add(this.cmbkategori);
             this.Controls.Add(this.label6);
@@ -274,5 +287,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbkategori;
         private System.Windows.Forms.Button btnImportExcel;
+        private System.Windows.Forms.Button btnImportDatabase;
     }
 }

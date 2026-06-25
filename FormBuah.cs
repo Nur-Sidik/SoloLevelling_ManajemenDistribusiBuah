@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO; // Wajib untuk MemoryStream Foto
 using System.Windows.Forms;
 
 namespace Manajemen_Distribusi_Buah
@@ -15,51 +11,11 @@ namespace Manajemen_Distribusi_Buah
     {
         private BindingSource bindingSourceBuah = new BindingSource();
         private DataTable dtBuah = new DataTable();
-        private readonly SqlConnection conn;
         private readonly string connectionString = "Data Source=MSI\\UNKNOWNMEMBER;Initial Catalog=ManajemenBuah;Integrated Security=True";
 
         public FormBuah()
         {
-            conn = new SqlConnection(connectionString);
             InitializeComponent();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void btncari_Click(object sender, EventArgs e)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    // Memanggil Stored Procedure untuk pencarian
-                    SqlCommand cmd = new SqlCommand("sp_SearchBuah", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Parameter '@cari' harus sama dengan yang ada di SQL Server
-                    cmd.Parameters.AddWithValue("@cari", txtcari.Text);
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-
-                    // Tampilkan hasil ke DataGridView melalui BindingSource
-                    bindingSourceBuah.DataSource = dt;
-                    dgvbuah.DataSource = bindingSourceBuah;
-
-                    if (dt.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Data buah tidak ditemukan.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Pencarian Gagal: " + ex.Message);
-                }
-            }
         }
 
         private void FormBuah_Load(object sender, EventArgs e)
@@ -75,16 +31,13 @@ namespace Manajemen_Distribusi_Buah
                 try
                 {
                     conn.Open();
-                    // Memanggil VIEW untuk keamanan sesuai instruksi dosen
                     SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM vw_Buah", conn);
                     dtBuah = new DataTable();
                     da.Fill(dtBuah);
                     dtBuah.Columns["ID"].AllowDBNull = true;
-                    // Hubungkan data ke BindingSource agar navigator berfungsi
+
                     bindingSourceBuah.DataSource = dtBuah;
                     dgvbuah.DataSource = bindingSourceBuah;
-
-                    //BindControls();
                 }
                 catch (Exception ex)
                 {
@@ -93,35 +46,37 @@ namespace Manajemen_Distribusi_Buah
             }
         }
 
-        private void BindControls()
+        // --- HELPER FOTO ---
+        private byte[] ImageToByteArray(Image img)
         {
-            txtnama.DataBindings.Clear();
-            cmbjenis.DataBindings.Clear();
-            txtharga.DataBindings.Clear();
-
-            txtnama.DataBindings.Add("Text", bindingSourceBuah, "Nama Buah");
-            cmbjenis.DataBindings.Add("Text", bindingSourceBuah, "Jenis");
-            txtharga.DataBindings.Add("Text", bindingSourceBuah, "Harga/Kg");
+            if (img == null) return null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                return ms.ToArray();
+            }
         }
 
-        private void txtnama_TextChanged(object sender, EventArgs e)
+        private Image ByteArrayToImage(byte[] data)
         {
-
+            if (data == null || data.Length == 0) return null;
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                return Image.FromStream(ms);
+            }
         }
 
-        private void txtharga_TextChanged(object sender, EventArgs e)
+        // --- EVENT HANDLER ---
+        private void btnBrowse_Click(object sender, EventArgs e)
         {
+            OpenFileDialog opf = new OpenFileDialog();
+            opf.Filter = "Choose Image(*.jpg;*.png;*.jpeg)|*.jpg;*.png;*.jpeg";
 
-        }
-
-        private void cmbjenis_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtcari_TextChanged(object sender, EventArgs e)
-        {
-
+            if (opf.ShowDialog() == DialogResult.OK)
+            {
+                pbFotoBuah.Image = Image.FromFile(opf.FileName);
+                pbFotoBuah.SizeMode = PictureBoxSizeMode.Zoom;
+            }
         }
 
         private void btnsimpan_Click(object sender, EventArgs e)
@@ -136,34 +91,23 @@ namespace Manajemen_Distribusi_Buah
                     cmd.Parameters.AddWithValue("@jenis", cmbjenis.Text);
                     cmd.Parameters.AddWithValue("@harga", decimal.Parse(txtharga.Text));
 
+                    // Memasukkan Foto ke Database
+                    byte[] fotoData = ImageToByteArray(pbFotoBuah.Image);
+                    if (fotoData != null) cmd.Parameters.AddWithValue("@foto", fotoData);
+                    else cmd.Parameters.Add("@foto", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Data buah berhasil ditambahkan!");
-                    LoadData();
-
-                    txtnama.Clear();
-                    txtharga.Clear();
-                    cmbjenis.SelectedIndex = -1;
+                    btnreset_Click(sender, e);
                 }
                 catch (Exception ex) { MessageBox.Show("Error Simpan: " + ex.Message); }
             }
         }
 
-        private void btnreset_Click(object sender, EventArgs e)
-        {
-            {
-                LoadData();
-                MessageBox.Show("Data di-refresh!");
-            }
-        }
-
         private void btnubah_Click(object sender, EventArgs e)
         {
-            if (bindingSourceBuah.Current == null)
-            {
-                MessageBox.Show("Pilih data yang akan diubah terlebih dahulu!");
-                return;
-            }
+            if (bindingSourceBuah.Current == null) return;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -174,11 +118,14 @@ namespace Manajemen_Distribusi_Buah
 
                     SqlCommand cmd = new SqlCommand("sp_UpdateBuah", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     cmd.Parameters.AddWithValue("@id", idBuah);
                     cmd.Parameters.AddWithValue("@nama", txtnama.Text);
                     cmd.Parameters.AddWithValue("@jenis", cmbjenis.Text);
                     cmd.Parameters.AddWithValue("@harga", decimal.Parse(txtharga.Text));
+
+                    byte[] fotoData = ImageToByteArray(pbFotoBuah.Image);
+                    if (fotoData != null) cmd.Parameters.AddWithValue("@foto", fotoData);
+                    else cmd.Parameters.Add("@foto", SqlDbType.VarBinary, -1).Value = DBNull.Value;
 
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -192,8 +139,7 @@ namespace Manajemen_Distribusi_Buah
         private void btnhapus_Click(object sender, EventArgs e)
         {
             if (bindingSourceBuah.Current == null) return;
-
-            DialogResult dr = MessageBox.Show("Yakin ingin menghapus buah ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult dr = MessageBox.Show("Yakin ingin menghapus?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -201,7 +147,7 @@ namespace Manajemen_Distribusi_Buah
                     try
                     {
                         DataRowView row = (DataRowView)bindingSourceBuah.Current;
-                        int idBuah = Convert.ToInt32(row["id_buah"]);
+                        int idBuah = Convert.ToInt32(row["ID"]);
 
                         SqlCommand cmd = new SqlCommand("sp_DeleteBuah", conn);
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -210,7 +156,7 @@ namespace Manajemen_Distribusi_Buah
                         conn.Open();
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Data berhasil dihapus!");
-                        LoadData();
+                        btnreset_Click(sender, e);
                     }
                     catch (Exception ex) { MessageBox.Show("Gagal Hapus: " + ex.Message); }
                 }
@@ -222,24 +168,59 @@ namespace Manajemen_Distribusi_Buah
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvbuah.Rows[e.RowIndex];
+                txtnama.Text = row.Cells["Nama Buah"].Value.ToString();
+                cmbjenis.Text = row.Cells["Jenis"].Value.ToString();
+                txtharga.Text = row.Cells["Harga/Kg"].Value.ToString();
 
-                // Pindahkan isi tabel ke TextBox secara manual saat diklik
-                txtnama.Text = row.Cells["nama_buah"].Value.ToString();
-                cmbjenis.Text = row.Cells["jenis_buah"].Value.ToString();
-                txtharga.Text = row.Cells["harga_per_kg"].Value.ToString();
+                // PENGAMANAN ANTI-CRASH: Cek apakah kolom Foto benar-benar ada di tabel
+                if (dgvbuah.Columns.Contains("Foto") && row.Cells["Foto"].Value != DBNull.Value)
+                {
+                    pbFotoBuah.Image = ByteArrayToImage((byte[])row.Cells["Foto"].Value);
+                    pbFotoBuah.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else
+                {
+                    pbFotoBuah.Image = null; // Kosongkan jika tidak ada foto / kolom tidak ada
+                }
             }
         }
 
-        private void btnBrowse_Click(object sender, EventArgs e)
+        private void btncari_Click(object sender, EventArgs e)
         {
-            OpenFileDialog opf = new OpenFileDialog();
-            opf.Filter = "Choose Image(*.jpg;*.png;*.jpeg)|*.jpg;*.png;*.jpeg";
-
-            if (opf.ShowDialog() == DialogResult.OK)
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                pbFotoBuah.Image = Image.FromFile(opf.FileName);
-                pbFotoBuah.SizeMode = PictureBoxSizeMode.Zoom;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("sp_SearchBuah", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@cari", txtcari.Text);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    bindingSourceBuah.DataSource = dt;
+                    dgvbuah.DataSource = bindingSourceBuah;
+                }
+                catch (Exception ex) { MessageBox.Show("Pencarian Gagal: " + ex.Message); }
             }
+        }
+
+        private void btnreset_Click(object sender, EventArgs e)
+        {
+            txtnama.Clear();
+            txtcari.Clear();
+            txtharga.Clear();
+            cmbjenis.SelectedIndex = -1;
+            pbFotoBuah.Image = null;
+            LoadData();
+        }
+
+        // Kosongkan fungsi yang tidak perlu agar rapi
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+        private void txtnama_TextChanged(object sender, EventArgs e) { }
+        private void txtharga_TextChanged(object sender, EventArgs e) { }
+        private void cmbjenis_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void txtcari_TextChanged(object sender, EventArgs e) { }
     }
-    
 }

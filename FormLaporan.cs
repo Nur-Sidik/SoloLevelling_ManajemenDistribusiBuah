@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 using CrystalDecisions.CrystalReports.Engine;
 
 namespace Manajemen_Distribusi_Buah
@@ -25,18 +17,23 @@ namespace Manajemen_Distribusi_Buah
             conn = new SqlConnection(connectionString);
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void FormLaporan_Load(object sender, EventArgs e)
         {
             HitungRingkasan();
             TampilRiwayatLengkap();
-            LaporanDistribusi rpt = new LaporanDistribusi { };
-            crystalReportViewer1.ReportSource = rpt;
-            crystalReportViewer1.Refresh();
+
+            // PENGAMANAN: Mencegah aplikasi crash jika Crystal Report belum terhubung sempurna
+            try
+            {
+                LaporanDistribusi rpt = new LaporanDistribusi();
+                crystalReportViewer1.ReportSource = rpt;
+                crystalReportViewer1.Refresh();
+            }
+            catch (Exception ex)
+            {
+                // Cuma kasih tau pesan, tapi form tidak akan mati (GridView tetap aman)
+                MessageBox.Show("Report Viewer belum siap, namun data tabel berhasil dimuat.\nInfo detail: " + ex.Message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -64,7 +61,6 @@ namespace Manajemen_Distribusi_Buah
                     SqlCommand cmd3 = new SqlCommand("SELECT COUNT(*) FROM Distribusi", conn);
                     int totalData = (int)cmd3.ExecuteScalar();
                     lbljumlah.Text = totalData.ToString() + " Transaksi";
-
                 }
                 catch (Exception ex)
                 {
@@ -80,9 +76,7 @@ namespace Manajemen_Distribusi_Buah
                 try
                 {
                     conn.Open();
-                    // Memanggil VIEW vw_Distribusi agar tidak error dan aman dari SQL Injection
                     string query = "SELECT * FROM vw_Distribusi ORDER BY Tanggal DESC";
-
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -91,5 +85,7 @@ namespace Manajemen_Distribusi_Buah
                 catch (Exception ex) { MessageBox.Show("Gagal memuat riwayat: " + ex.Message); }
             }
         }
+
+        private void label2_Click(object sender, EventArgs e) { }
     }
 }
